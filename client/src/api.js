@@ -1,6 +1,10 @@
 // Same origin on Render = use /api. Local dev = different ports.
 const API_URL = process.env.REACT_APP_API_URL || 
   (typeof window !== 'undefined' && window.location.port === '3000' ? 'http://localhost:5000/api' : '/api');
+// Base URL for OAuth redirects (without /api)
+const API_BASE = typeof window !== 'undefined'
+  ? (process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL.replace(/\/api\/?$/, '') : window.location.origin)
+  : '';
 
 function getToken() {
   return localStorage.getItem('token');
@@ -38,6 +42,17 @@ export const api = {
         body: JSON.stringify({ email, password }),
       }),
     me: () => request('/auth/me'),
+    forgotPassword: (email) =>
+      request('/auth/forgot-password', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+      }),
+    resetPassword: (token, password) =>
+      request('/auth/reset-password', {
+        method: 'POST',
+        body: JSON.stringify({ token, password }),
+      }),
+    oauthUrl: (provider) => `${API_BASE}/api/auth/${provider}`,
   },
   groups: {
     list: () => request('/groups'),

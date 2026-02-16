@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { api } from '../api';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -9,6 +10,12 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const err = searchParams.get('error');
+    if (err) setError(decodeURIComponent(err));
+  }, [searchParams]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -22,6 +29,10 @@ function Login() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function handleOAuth(provider) {
+    window.location.href = api.auth.oauthUrl(provider);
   }
 
   return (
@@ -50,6 +61,21 @@ function Login() {
             {loading ? 'Logging in...' : 'Log in'}
           </button>
         </form>
+
+        <div className="auth-divider">or</div>
+
+        <div className="social-buttons">
+          <button type="button" className="btn-google" onClick={() => handleOAuth('google')}>
+            Continue with Google
+          </button>
+          <button type="button" className="btn-facebook" onClick={() => handleOAuth('facebook')}>
+            Continue with Facebook
+          </button>
+        </div>
+
+        <p className="auth-link">
+          <Link to="/forgot-password">Forgot password?</Link>
+        </p>
 
         <p className="link">
           Don't have an account? <Link to="/signup">Sign up</Link>

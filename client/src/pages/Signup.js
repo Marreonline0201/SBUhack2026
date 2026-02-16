@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { api } from '../api';
 
 function Signup() {
   const [name, setName] = useState('');
@@ -59,6 +60,17 @@ function Signup() {
             {loading ? 'Creating account...' : 'Sign up'}
           </button>
         </form>
+
+        <div className="auth-divider">or</div>
+
+        <div className="social-buttons">
+          <button type="button" className="btn-google" onClick={() => window.location.href = api.auth.oauthUrl('google')}>
+            Continue with Google
+          </button>
+          <button type="button" className="btn-facebook" onClick={() => window.location.href = api.auth.oauthUrl('facebook')}>
+            Continue with Facebook
+          </button>
+        </div>
 
         <p className="link">
           Already have an account? <Link to="/login">Log in</Link>

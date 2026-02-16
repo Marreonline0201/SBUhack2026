@@ -22,7 +22,18 @@ function initDb() {
       email TEXT UNIQUE NOT NULL,
       password_hash TEXT NOT NULL,
       name TEXT NOT NULL,
+      oauth_provider TEXT,
+      oauth_id TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS password_reset_tokens (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      token TEXT UNIQUE NOT NULL,
+      expires_at DATETIME NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id)
     );
 
     CREATE TABLE IF NOT EXISTS groups (
@@ -67,6 +78,10 @@ function initDb() {
       FOREIGN KEY (game_id) REFERENCES games(id)
     );
   `);
+
+  // Migration: add OAuth columns if they don't exist
+  try { db.exec(`ALTER TABLE users ADD COLUMN oauth_provider TEXT`); } catch (e) { /* exists */ }
+  try { db.exec(`ALTER TABLE users ADD COLUMN oauth_id TEXT`); } catch (e) { /* exists */ }
 
   return db;
 }

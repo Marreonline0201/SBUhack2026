@@ -14,7 +14,12 @@
     "better-sqlite3": "^11.6.0",
     "cors": "^2.8.5",
     "express": "^4.21.1",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.16",
+    "resend": "^4.0.0",
+    "passport": "^0.7.0",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

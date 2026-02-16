@@ -2,6 +2,13 @@
 
 A website for couples or friends to track bets and wins in games.
 
+## Features
+
+- Email/password signup & login
+- **Google & Facebook** sign-in (optional)
+- **Forgot password** – reset via email
+- Groups, games, bets, wins tracking
+
 ## Local Development
 
 ```bash
@@ -24,6 +31,20 @@ Opens at http://localhost:3000
 3. **Manual Deploy** → **Deploy latest commit**
 
 The build is committed to the repo, so Render only needs `npm install`. When you change the frontend, run `npm run build` locally and commit the updated `client/build` folder.
+
+### Optional: OAuth (Google, Facebook)
+
+Add these env vars in Render → Environment:
+- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` – from [Google Cloud Console](https://console.cloud.google.com/)
+- `FACEBOOK_APP_ID`, `FACEBOOK_APP_SECRET` – from [Meta Developers](https://developers.facebook.com/)
+- `API_URL` – your Render URL (e.g. `https://sbuhack2026.onrender.com`)
+- `FRONTEND_URL` – same as API_URL if using Render for frontend
+
+### Optional: Forgot password email
+
+Add one of these:
+- **Resend**: `RESEND_API_KEY`, `EMAIL_FROM` (e.g. `noreply@yourdomain.com`)
+- **SMTP**: `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_FROM`
 
 ---
 
