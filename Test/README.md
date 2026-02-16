@@ -61,6 +61,44 @@ A website for couples or friends to track bets and wins in games. Create groups,
    npm run dev
    ```
 
+## Deploy to GitHub Pages (Public)
+
+The frontend deploys to GitHub Pages automatically when you push to `main`. The backend must be hosted separately (GitHub Pages only serves static files).
+
+### Step 1: Deploy the backend to Render (free)
+
+1. Go to [render.com](https://render.com) and sign up.
+2. **New** → **Web Service**
+3. Connect your GitHub repo `Marreonline0201/SBUhack2026`
+4. Configure:
+   - **Root Directory**: `Test`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm run server`
+   - **Instance Type**: Free
+5. Click **Create Web Service**. Wait for deployment.
+6. Copy your backend URL (e.g. `https://bettracker-xxx.onrender.com`)
+
+### Step 2: Add the backend URL to GitHub
+
+1. On GitHub: repo → **Settings** → **Secrets and variables** → **Actions**
+2. **New repository secret**
+3. Name: `REACT_APP_API_URL`
+4. Value: `https://your-app-name.onrender.com/api` (your Render URL + `/api`)
+
+### Step 3: Enable GitHub Pages
+
+1. Repo → **Settings** → **Pages**
+2. **Source**: GitHub Actions
+3. Save
+
+### Step 4: Push to deploy
+
+Push to `main`. The workflow will build and deploy. Your site will be at:
+
+**https://marreonline0201.github.io/SBUhack2026**
+
+---
+
 ## How It Works
 
 1. **Sign up** – Create an account with your name, email, and password.

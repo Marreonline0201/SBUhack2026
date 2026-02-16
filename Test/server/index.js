@@ -15,7 +15,10 @@ const PORT = process.env.PORT || 5000;
 initDb();
 
 // Middleware
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://marreonline0201.github.io'],
+  credentials: true
+}));
 app.use(express.json());
 
 // API Routes
