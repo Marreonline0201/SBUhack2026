@@ -16,7 +16,7 @@ initDb();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://marreonline0201.github.io', 'https://sbuhack2026.onrender.com'],
+  origin: ['http://localhost:3000', 'https://marreonline0201.github.io', 'https://sbuhack2026.onrender.com', 'https://betwithfriends0216.com', 'https://www.betwithfriends0216.com'],
   credentials: true
 }));
 app.use(express.json());
