@@ -1,4 +1,6 @@
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// Same origin on Render = use /api. Local dev = different ports.
+const API_URL = process.env.REACT_APP_API_URL || 
+  (typeof window !== 'undefined' && window.location.port === '3000' ? 'http://localhost:5000/api' : '/api');
 
 function getToken() {
   return localStorage.getItem('token');

@@ -16,7 +16,7 @@ initDb();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://marreonline0201.github.io'],
+  origin: ['http://localhost:3000', 'https://marreonline0201.github.io', 'https://sbuhack2026.onrender.com'],
   credentials: true
 }));
 app.use(express.json());
@@ -33,9 +33,13 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Root route - so Render doesn't show "Cannot GET /"
-app.get('/', (req, res) => {
-  res.redirect('https://marreonline0201.github.io/SBUhack2026');
+// Serve React app (production build)
+const buildPath = path.join(__dirname, '..', 'client', 'build');
+app.use(express.static(buildPath));
+
+// SPA fallback - serve index.html for all non-API routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(buildPath, 'index.html'));
 });
 
 app.listen(PORT, () => {
