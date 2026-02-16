@@ -19,8 +19,8 @@ Opens at http://localhost:3000
 1. Go to [render.com](https://render.com) → your service → **Settings**
 2. Set:
    - **Root Directory**: leave empty
-   - **Build Command**: `npm install && bash build.sh`
+   - **Build Command**: `npm install`
    - **Start Command**: `npm run server`
 3. **Manual Deploy** → **Deploy latest commit**
 
-If you see "Build missing", check the **Build logs** in Render. The client build must complete. Free tier may need 2–3 minutes for `npm run build`.
+The build is committed to the repo, so Render only needs `npm install`. When you change the frontend, run `npm run build` locally and commit the updated `client/build` folder.

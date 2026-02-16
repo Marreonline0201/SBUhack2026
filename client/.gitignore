@@ -8,8 +8,8 @@
 # testing
 /coverage
 
-# production
-/build
+# production (build is committed for Render deployment)
+# /build
 
 # misc
 .DS_Store
