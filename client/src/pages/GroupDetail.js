@@ -13,10 +13,12 @@ function GroupDetail() {
   const [expandedGame, setExpandedGame] = useState(null);
   const [gameData, setGameData] = useState({}); // { gameId: { bets, wins, leaderboard } }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadGroup();
   }, [id]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (group) loadGames();
   }, [group]);
