@@ -29,7 +29,7 @@ The build is committed to the repo, so Render only needs `npm install`. When you
 
 ## GitHub Pages (Optional)
 
-To also deploy to https://marreonline0201.github.io/SBUhack2026:
+To also deploy to https://marreonline0201.github.io/betwithfriends:
 
 1. **Add secret**: Repo → Settings → Secrets and variables → Actions → New secret  
    - Name: `REACT_APP_API_URL`  

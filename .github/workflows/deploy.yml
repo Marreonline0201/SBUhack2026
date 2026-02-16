@@ -33,7 +33,7 @@ jobs:
         working-directory: client
         env:
           CI: false
-          PUBLIC_URL: /SBUhack2026
+          PUBLIC_URL: /betwithfriends
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
         run: |
           npm install
