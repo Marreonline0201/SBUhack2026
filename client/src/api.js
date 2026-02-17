@@ -1,10 +1,24 @@
-// Same origin on Render = use /api. Local dev = different ports.
-const API_URL = process.env.REACT_APP_API_URL || 
-  (typeof window !== 'undefined' && window.location.port === '3000' ? 'http://localhost:5000/api' : '/api');
+// API URL: env var, or infer from host
+function getApiUrl() {
+  if (process.env.REACT_APP_API_URL) return process.env.REACT_APP_API_URL;
+  if (typeof window === 'undefined') return '/api';
+  if (window.location.port === '3000') return 'http://localhost:5000/api';
+  // Same origin on Render
+  if (window.location.hostname === 'sbuhack2026.onrender.com') return '/api';
+  // GitHub Pages / custom domain: must use full Render API URL
+  const RENDER_API = 'https://sbuhack2026.onrender.com/api';
+  if (/marreonline0201\.github\.io|betwithfriends0216\.com/.test(window.location.hostname)) return RENDER_API;
+  return '/api';
+}
+const API_URL = getApiUrl();
 // Base URL for OAuth redirects (without /api)
-const API_BASE = typeof window !== 'undefined'
-  ? (process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL.replace(/\/api\/?$/, '') : window.location.origin)
-  : '';
+function getApiBase() {
+  if (typeof window === 'undefined') return '';
+  const url = getApiUrl();
+  if (url.startsWith('http')) return url.replace(/\/api\/?$/, '');
+  return window.location.origin;
+}
+const API_BASE = getApiBase();
 
 function getToken() {
   return localStorage.getItem('token');

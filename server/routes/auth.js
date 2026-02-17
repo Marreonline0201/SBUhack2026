@@ -90,15 +90,15 @@ if (process.env.FACEBOOK_APP_ID && process.env.FACEBOOK_APP_SECRET) {
 
 // Sign up
 router.post('/signup', (req, res) => {
-  const { email, password, name } = req.body;
-  if (!email || !password || !name) {
-    return res.status(400).json({ error: 'Email, password, and name are required' });
-  }
-
-  const db = getDb();
-  const passwordHash = bcrypt.hashSync(password, 10);
-
   try {
+    const { email, password, name } = req.body;
+    if (!email || !password || !name) {
+      return res.status(400).json({ error: 'Email, password, and name are required' });
+    }
+
+    const db = getDb();
+    const passwordHash = bcrypt.hashSync(password, 10);
+
     const result = db.prepare(
       'INSERT INTO users (email, password_hash, name) VALUES (?, ?, ?)'
     ).run(email.toLowerCase(), passwordHash, name.trim());
@@ -109,10 +109,11 @@ router.post('/signup', (req, res) => {
       user: { id: result.lastInsertRowid, email, name: name.trim() }
     });
   } catch (err) {
-    if (err.message.includes('UNIQUE')) {
+    if (err.message && err.message.includes('UNIQUE')) {
       return res.status(400).json({ error: 'Email already registered' });
     }
-    throw err;
+    console.error('Signup error:', err);
+    res.status(500).json({ error: err.message || 'Signup failed' });
   }
 });
 
