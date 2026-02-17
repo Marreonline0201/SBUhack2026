@@ -34,7 +34,7 @@ jobs:
         env:
           CI: false
           PUBLIC_URL: /betwithfriends
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL || 'https://sbuhack2026.onrender.com/api' }}
         run: |
           npm install
           npm run build
