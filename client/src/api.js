@@ -1,14 +1,13 @@
 // API URL: env var, or infer from host
+const RENDER_API = 'https://sbuhack2026.onrender.com/api';
 function getApiUrl() {
   if (process.env.REACT_APP_API_URL) return process.env.REACT_APP_API_URL;
-  if (typeof window === 'undefined') return '/api';
+  if (typeof window === 'undefined') return RENDER_API;
   if (window.location.port === '3000') return 'http://localhost:5000/api';
-  // Same origin on Render
+  // Same origin on Render backend
   if (window.location.hostname === 'sbuhack2026.onrender.com') return '/api';
-  // GitHub Pages / custom domain: must use full Render API URL
-  const RENDER_API = 'https://sbuhack2026.onrender.com/api';
-  if (/marreonline0201\.github\.io|betwithfriends0216\.com/.test(window.location.hostname)) return RENDER_API;
-  return '/api';
+  // Any other host (GitHub Pages, other domains): use full Render API URL
+  return RENDER_API;
 }
 const API_URL = getApiUrl();
 // Base URL for OAuth redirects (without /api)
