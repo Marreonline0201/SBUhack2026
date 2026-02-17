@@ -40,10 +40,13 @@ const getApiUrl = () => {
   return 'http://localhost:5000';
 };
 
-if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+const gid = (process.env.GOOGLE_CLIENT_ID || '').trim();
+const gsec = (process.env.GOOGLE_CLIENT_SECRET || '').trim();
+const hasGoogle = !!(gid && gsec);
+if (hasGoogle) {
   passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    clientID: gid,
+    clientSecret: gsec,
     callbackURL: `${getApiUrl()}/api/auth/google/callback`
   }, async (accessToken, refreshToken, profile, done) => {
     const db = getDb();

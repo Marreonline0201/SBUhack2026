@@ -35,6 +35,16 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+// OAuth config check (for debugging - does not reveal secrets)
+app.get('/api/auth/config', (req, res) => {
+  const gid = process.env.GOOGLE_CLIENT_ID || '';
+  const gsec = process.env.GOOGLE_CLIENT_SECRET || '';
+  res.json({
+    google: { configured: !!(gid.trim() && gsec.trim()), hasClientId: !!gid.trim(), hasSecret: !!gsec.trim() },
+    facebook: { configured: !!(process.env.FACEBOOK_APP_ID?.trim() && process.env.FACEBOOK_APP_SECRET?.trim()) }
+  });
+});
+
 // Serve React app (production build)
 const buildPath = path.join(__dirname, '..', 'client', 'build');
 const indexPath = path.join(buildPath, 'index.html');
@@ -56,4 +66,11 @@ if (require('fs').existsSync(indexPath)) {
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  const gid = process.env.GOOGLE_CLIENT_ID || '';
+  const gsec = process.env.GOOGLE_CLIENT_SECRET || '';
+  if (gid.trim() && gsec.trim()) {
+    console.log('Google OAuth: configured');
+  } else {
+    console.log('Google OAuth: NOT configured (GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET missing)');
+  }
 });
